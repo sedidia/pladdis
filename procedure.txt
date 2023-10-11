@@ -1,0 +1,99 @@
+Voici les étapes pour créer une application ReactJS de A à Z avec Webpack :
+
+1. Créez un nouveau dossier pour votre application et ouvrez-le dans votre éditeur de code.
+2. Initialisez un nouveau projet npm en exécutant la commande suivante dans votre terminal : npm init -y
+3. Installez les dépendances suivantes :
+
+
+npm install react react-dom
+npm install --save-dev webpack webpack-cli webpack-dev-server babel-loader @babel/core @babel/preset-env @babel/preset-react html-webpack-plugin
+
+
+4. Créez un fichier webpack.config.js à la racine de votre projet et ajoutez le code suivant :
+
+js
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+module.exports = {
+  entry: './src/index.js',
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'bundle.js',
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env', '@babel/preset-react'],
+          },
+        },
+      },
+    ],
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+    }),
+  ],
+  devServer: {
+    static: './public',
+    port: 3000,
+    open: true
+  },
+};
+
+
+5. Créez un dossier src à la racine de votre projet et créez un fichier index.js à l'intérieur. Ajoutez le code suivant :
+
+js
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+
+ReactDOM.render(<App />, document.getElementById('root'));
+
+
+6. Créez un fichier index.html dans le dossier src et ajoutez le code suivant :
+
+html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>React App</title>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
+
+
+7. Créez un fichier App.js dans le dossier src et ajoutez le code suivant :
+
+js
+import React from 'react';
+
+const App = () => {
+  return <h1>Hello, World!</h1>;
+};
+
+export default App;
+
+
+8. Ajoutez les scripts suivants à votre fichier package.json :
+
+json
+"scripts": {
+  "start": "webpack serve --mode development --open",
+  "build": "webpack --mode production"
+},
+
+
+9. Exécutez la commande npm start pour lancer votre application en mode développement.
+
+Votre application ReactJS est maintenant prête à être développée avec Webpack !
